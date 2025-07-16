@@ -1,4 +1,3 @@
-// ====== CẤU HÌNH ======
 module.exports = {
   RPC_URL: "https://testnet.dplabs-internal.com", 
   CONTROLLER_ADDRESS: "0x51be1ef20a1fd5179419738fc71d95a8b6f8a175", //  ETHRegistrarController
