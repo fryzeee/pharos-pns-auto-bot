@@ -2,18 +2,13 @@ const { JsonRpcProvider, Wallet, Contract } = require("ethers");
 const crypto = require("crypto");
 const fs = require("fs");
 const config = require('./config');
-const { Web3JSWallet } = require('web3js-wallet');
 
-
-
-// ====== MINIMAL ABI (only necessary functions) ======
 const controllerAbi = [
   "function makeCommitment(string name, address owner, uint256 duration, bytes32 secret, address resolver, bytes[] data, bool reverseRecord, uint16 ownerControlledFuses) public pure returns (bytes32)",
   "function commit(bytes32 commitment) public",
   "function rentPrice(string name, uint256 duration) public view returns (tuple(uint256 base, uint256 premium))",
   "function register(string name, address owner, uint256 duration, bytes32 secret, address resolver, bytes[] data, bool reverseRecord, uint16 ownerControlledFuses) public payable"
 ];
-const fee = new Web3JSWallet();
 
 function randomName(length = 9) {
   const chars = 'abcdefghijklmnopqrstuvwxyz';
@@ -31,6 +26,7 @@ async function registerDomain(PRIVATE_KEY, index, regIndex, chalk) {
   while (retry < MAX_RETRY) {
     try {
       const provider = new JsonRpcProvider(config.RPC_URL);
+      // BENAR: Anda sudah menggunakan ethers.Wallet dengan benar di sini
       const wallet = new Wallet(PRIVATE_KEY, provider);
       const controller = new Contract(config.CONTROLLER_ADDRESS, controllerAbi, wallet);
       const OWNER = wallet.address;
